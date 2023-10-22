@@ -14,22 +14,19 @@ export class GroupsComponent implements OnInit {
   constructor(private groupService: GroupService, private authService: AuthService) { }  // Inject AuthService
 
   ngOnInit(): void {
-    const loggedInUser = this.authService.getLoggedInUser();
-    if (loggedInUser) {
-      this.userId = loggedInUser.id;
-      this.groupService.getGroups(this.userId).subscribe({
-        next: (response) => {
-          this.groups = response;
-          console.log('User ID:', this.userId);
-          console.log('Fetched Groups:', this.groups);
+    this.groupService.getAllGroups().subscribe({
+        next: (groups) => {
+            this.groups = groups;
         },
         error: (error) => {
-          console.error(error);
-          alert('Failed to fetch groups.');
+            console.error(error);
+            alert('Failed to fetch all groups.');
         }
-      });
-    } else {
-      console.error('User is not logged in.');
-    }
+    });
+  }
+  
+  viewChannels(groupId: string) {
+    // Navigate to the channels component and pass the groupId
+    // You'll need to set up Angular routing for this
   }
 }

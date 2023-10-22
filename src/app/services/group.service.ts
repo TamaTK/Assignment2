@@ -19,11 +19,6 @@ export class GroupService {
     });
   }
 
-  getGroups(userId: string): Observable<GroupModel[]> {
-    return this.http.get<GroupModel[]>(`${this.apiUrl}/get-groups/${userId}`);
-}
-
-
 
   getAllGroups(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/group/all-groups`);

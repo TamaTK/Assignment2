@@ -1,8 +1,10 @@
 <a routerLink="/group-management">Create Group</a>
 
-<h2>Your Groups</h2>
+<h2>Groups</h2>
 <ul>
   <li *ngFor="let group of groups">
     {{ group.name }}
+    <button (click)="viewChannels(group._id)">View Channels</button>
+
   </li>
 </ul>

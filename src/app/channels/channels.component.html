@@ -1,1 +1,8 @@
-<p>channels works!</p>
+<input [(ngModel)]="channelName" placeholder="Enter channel name">
+<button (click)="createChannel()">Create Channel</button>
+<ul>
+    <li *ngFor="let channel of channels">
+      {{ channel.name }}
+    </li>
+</ul>
+  

@@ -12,6 +12,8 @@ export class ChannelsComponent implements OnInit {
   channels: any[] = [];
   channelName: string = '';
   selectedGroupId: string = '';  // This should be set when navigating to this component
+  newMessage: string = '';
+  chatMessages: any[] = [];
 
   constructor(private channelService: ChannelService, private route: ActivatedRoute,private socketService: SocketService) { }
 
@@ -62,10 +64,10 @@ export class ChannelsComponent implements OnInit {
   }
   
   onSendMessage(message: string) {
-    const data = {
-      channelId: 'YourChannelId',  // Replace with the actual channelId
-      message: message
-    };
-    this.socketService.sendMessage(data);
+    if (message.trim()) {
+        // Emit the message using the socket service
+        this.socketService.sendMessage(message);
+        this.newMessage = '';  // Clear the input field
+    }
   }
 }

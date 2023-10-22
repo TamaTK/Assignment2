@@ -5,4 +5,28 @@
       {{ channel.name }}
     </li>
 </ul>
+
+<!-- Existing code for displaying channels -->
+<div *ngFor="let channel of channels">
+    <a [routerLink]="['/channels', channel._id]">{{ channel.name }}</a>
+</div>
+
+<!-- Chat Area -->
+<div class="chat-area">
+    <div class="messages">
+        <!-- Display messages here. This will be populated dynamically -->
+        <div *ngFor="let message of chatMessages">
+            {{ message.user }}: {{ message.text }}
+        </div>
+    </div>
+
+    <!-- Input for typing messages -->
+    <div class="input-area">
+        <input [(ngModel)]="newMessage" placeholder="Type a message...">
+        <button (click)="onSendMessage(newMessage)">Send</button>
+    </div>
+</div>
+
+<!-- Add some basic styles for the chat area in channels.component.css -->
+
   

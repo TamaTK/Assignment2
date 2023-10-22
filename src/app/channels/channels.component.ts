@@ -57,8 +57,9 @@ export class ChannelsComponent implements OnInit {
 
   joinChannel(channelId: string) {
     const data = {
-      channelId: channelId,
-      username: 'YourUsername'  // Replace with the actual username
+        channelId: channelId,
+        groupId: this.selectedGroupId,  // Pass the group ID
+        username: 'YourUsername'  // Replace with the actual username
     };
     this.socketService.joinChannel(data);
   }

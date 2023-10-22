@@ -1,28 +1,27 @@
 const addListeners = (io, socket) => {
     console.log('New connection');
 
-    socket.on('join', (group) => {
-        console.log(`User has joined: ${group}`);
-        socket.join(group);
+    socket.on('join', ({ groupId, channelId }) => {
+        const roomName = `${groupId}-${channelId}`;
+        console.log(`User has joined: ${roomName}`);
+        socket.join(roomName);
     });
 
-    socket.on('sendImage', (base64Image, group) => {
-        io.to(group).emit('recieveImage', base64Image);
+    socket.on('sendImage', (base64Image, { groupId, channelId }) => {
+        const roomName = `${groupId}-${channelId}`;
+        io.to(roomName).emit('recieveImage', base64Image);
     });
 
-    socket.on('sendMessage', (message, group) => {
-        io.to(group).emit('newMessage', message);
+    socket.on('sendMessage', (message, { groupId, channelId }) => {
+        const roomName = `${groupId}-${channelId}`;
+        io.to(roomName).emit('newMessage', message);
     });
 
-    socket.on('leave', (group) => {
-        console.log(`User left group: ${group}`);
-        socket.leave(group);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('User has disconnected');
-    });
-};
-
+    socket.on('leave', ({ groupId, channelId }) => {
+    const roomName = `${groupId}-${channelId}`;
+    console.log(`User left: ${roomName}`);
+    socket.leave(roomName);
+});
+}
 
 module.exports = addListeners;

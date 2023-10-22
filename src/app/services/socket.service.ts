@@ -7,12 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private socket: any;
+  public currentGroupId: string = '';
 
   constructor() {
     this.socket = io('http://localhost:3000');
   }
 
   joinChannel(data: any) {
+    this.currentGroupId = data.groupId;
     this.socket.emit('joinChannel', data);
   }
 

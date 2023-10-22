@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Group = require('../models/group');
 var Channel = require('../models/channel');
+var Message = require('../models/message');
+
 
 // Endpoint to create a new group
 router.post('/create-group', async (req, res) => {
@@ -79,6 +81,23 @@ router.get('/get-group-channels/:groupId', async (req, res) => {
             return res.status(404).send('Group not found');
         }
         res.status(200).json(group.channels);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Endpoint to fetch the last 5 messages for a specific channel
+router.get('/get-channel-messages/:channelId', async (req, res) => {
+    const channelId = req.params.channelId;
+    try {
+        // Fetch the last 5 messages for the specified channel
+        const messages = await Message.find({ channel: channelId })
+            .sort({ timestamp: -1 })
+            .limit(5)
+            .populate('sender', 'username'); // Populate the sender's username
+
+        res.status(200).json(messages);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');

@@ -1,12 +1,25 @@
+const Message = require('../models/message');
+
 const addListeners = (io, socket) => {
     console.log('New connection');
 
-    socket.on('joinChannel', ({ groupId, channelId, username }) => {
+    socket.on('joinChannel', async ({ groupId, channelId, username }) => {
         const roomName = `${groupId}-${channelId}`;
         socket.join(roomName);
         io.to(roomName).emit('userJoined', username); // Notify others in the channel
-
-        // TODO: Fetch the last 5 messages from the channel and send to the user
+    
+        try {
+            // Fetch the last 5 messages for the channel
+            const messages = await Message.find({ channel: channelId })
+                .sort({ timestamp: -1 })
+                .limit(5)
+                .populate('sender', 'username'); // Populate the sender's username
+    
+            // Send the messages to the user who joined the channel
+            socket.emit('pastMessages', messages);
+        } catch (error) {
+            console.error('Error fetching past messages:', error);
+        }
     });
 
     socket.on('sendMessage', (message, { groupId, channelId }) => {

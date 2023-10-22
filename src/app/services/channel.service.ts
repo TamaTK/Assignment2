@@ -12,12 +12,12 @@ export class ChannelService {
 
   // Fetch channels of a group
   getGroupChannels(groupId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/channel/get-group-channels/${groupId}`);
+    return this.http.get<any>(`${this.apiUrl}/channels/get-group-channels/${groupId}`);
   }
 
   // Create a new channel within a group
   createChannel(groupId: string, channelName: string): Observable<any> {
     console.log('createChannel Service - Payload:', { groupId, channelName });
-    return this.http.post<any>(`${this.apiUrl}/channel/create-channel`, { groupId, channelName });
+    return this.http.post<any>(`${this.apiUrl}/create-channel`, { groupId, channelName });
   }
 }

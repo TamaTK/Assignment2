@@ -20,7 +20,7 @@
               <em>{{ msg.content }}</em>
           </div>
           <div *ngIf="msg.type !== 'notification'">
-              <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+              <strong>{{ msg.sender?.username }}:</strong> {{ msg.content }}
           </div>
       </div>
     </div>

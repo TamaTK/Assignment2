@@ -74,6 +74,7 @@ export class ChannelsComponent implements OnInit {
   onSendMessage(message: string) {
     if (message.trim()) {
         this.socketService.sendMessage(message);
+        this.chatMessages.push({ content: message, type: 'message' });  // Add the message to the chatMessages array
         this.newMessage = '';  // Clear the input field
     }
   }

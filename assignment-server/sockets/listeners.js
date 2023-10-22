@@ -22,12 +22,23 @@ const addListeners = (io, socket) => {
         }
     });
 
-    socket.on('sendMessage', (message, { groupId, channelId }) => {
+    socket.on('sendMessage', async (messageContent, { groupId, channelId, userId }) => {
         const roomName = `${groupId}-${channelId}`;
-        io.to(roomName).emit('newMessage', message);
-
-        // TODO: Save the message to the database or in-memory storage
+        io.to(roomName).emit('newMessage', messageContent);
+    
+        // Save the message to the database
+        const newMessage = new Message({
+            content: messageContent,
+            sender: userId,
+            channel: channelId
+        });
+        try {
+            await newMessage.save();
+        } catch (error) {
+            console.error('Error saving message:', error);
+        }
     });
+    
 
     socket.on('leaveChannel', ({ groupId, channelId, username }) => {
         const roomName = `${groupId}-${channelId}`;

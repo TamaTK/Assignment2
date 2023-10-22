@@ -14,19 +14,22 @@ export class GroupsComponent implements OnInit {
   constructor(private groupService: GroupService, private authService: AuthService) { }  // Inject AuthService
 
   ngOnInit(): void {
-    const loggedInUser = this.authService.getLoggedInUser();  // Fetch the logged-in user's details
+    const loggedInUser = this.authService.getLoggedInUser();
     if (loggedInUser) {
-      this.userId = loggedInUser._id;  // Set the userId
+      this.userId = loggedInUser.id;
+      this.groupService.getGroups(this.userId).subscribe({
+        next: (response) => {
+          this.groups = response;
+          console.log('User ID:', this.userId);
+          console.log('Fetched Groups:', this.groups);
+        },
+        error: (error) => {
+          console.error(error);
+          alert('Failed to fetch groups.');
+        }
+      });
+    } else {
+      console.error('User is not logged in.');
     }
-
-    this.groupService.getUserGroups(this.userId).subscribe({
-      next: (response) => {
-        this.groups = response.groups;
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to fetch groups.');
-      }
-    });
   }
 }

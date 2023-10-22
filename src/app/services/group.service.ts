@@ -48,4 +48,8 @@ export class GroupService {
   getChannels(groupId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/group/channels/${groupId}`);
   }
+
+  getUserGroups(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/group/get-user-groups/${userId}`);
+  }
 }

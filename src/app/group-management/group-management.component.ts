@@ -13,18 +13,22 @@ export class GroupManagementComponent {
   constructor(private groupService: GroupService) { }
 
   onSubmit() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-
-    const userId = 'YOUR_USER_ID'; // Retrieve this from your authentication logic or session
-    this.groupService.createGroup(this.groupName, userId).subscribe({
-      next: (response) => {
-        console.log(response);
-        alert('Group created successfully!');
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to create group.');
-      }
-    });
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');  // Parse the string to get the user object
+    const userId = loggedInUser._id;  // Extract the userId from the user object
+  
+    if (userId) {
+      this.groupService.createGroup(this.groupName, userId).subscribe({
+        next: (response) => {
+          console.log(response);
+          alert('Group created successfully!');
+        },
+        error: (error) => {
+          console.error(error);
+          alert('Failed to create group.');
+        }
+      });
+    } else {
+      alert('Failed to fetch user ID. Please ensure you are logged in.');
     }
   }
+}

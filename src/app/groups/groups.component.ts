@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../services/group.service';
+import { AuthService } from '../services/auth.service';  // Import AuthService
 
 @Component({
   selector: 'app-groups',
@@ -8,19 +9,24 @@ import { GroupService } from '../services/group.service';
 })
 export class GroupsComponent implements OnInit {
   groups: any[] = [];
-  userId: string = 'YOUR_USER_ID'; // Fetch this from your authentication/session logic
+  userId: string = '';  // Initialize as an empty string
 
-  
-  constructor(private groupService: GroupService) { }
+  constructor(private groupService: GroupService, private authService: AuthService) { }  // Inject AuthService
 
-  ngOnInit() {
-    this.groupService.getGroups().subscribe(
-      (data) => {
-        this.groups = data;
+  ngOnInit(): void {
+    const loggedInUser = this.authService.getLoggedInUser();  // Fetch the logged-in user's details
+    if (loggedInUser) {
+      this.userId = loggedInUser._id;  // Set the userId
+    }
+
+    this.groupService.getUserGroups(this.userId).subscribe({
+      next: (response) => {
+        this.groups = response.groups;
       },
-      (error) => {
-        console.error('Error fetching groups:', error);
+      error: (error) => {
+        console.error(error);
+        alert('Failed to fetch groups.');
       }
-    );
+    });
   }
 }

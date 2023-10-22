@@ -8,10 +8,10 @@ import { UserModel } from '../models/user';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
-  private userId: string | null = null;
+
   constructor(private http: HttpClient) {}
 
-  // Method for user login
+  // Existing method for user login
   login(username: string, password: string): Observable<{ message: string; user: UserModel } | null> {
     return this.http.post<{ message: string; user: UserModel } | null>(`${this.apiUrl}/login`, {
       username,
@@ -19,11 +19,8 @@ export class AuthService {
     });
   }
 
-  setUserId(id: string) {
-    this.userId = id;
-  }
-
-  getUserId(): string | null {
-    return this.userId;
+  // New method to get logged-in user's details
+  getLoggedInUser(): UserModel | null {
+    return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
   }
 }

@@ -29,12 +29,19 @@ export class ChannelsComponent implements OnInit {
         alert('Failed to fetch channels.');
       }
     });
+    // Listen for user join notifications
     this.socketService.userJoined().subscribe((username) => {
-      // Notify in the chat that the user has joined
+    this.chatMessages.push({ content: `${username} has joined the channel.`, type: 'notification' });
     });
-  
+
+    // Listen for user leave notifications
+    this.socketService.userLeft().subscribe((username) => {
+      this.chatMessages.push({ content: `${username} has left the channel.`, type: 'notification' });
+    });
+
+  // Listen for new messages
     this.socketService.receiveMessage().subscribe((message) => {
-      // Update the chat UI with the new message
+      this.chatMessages.push(message);
     });
   }
 

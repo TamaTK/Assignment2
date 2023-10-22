@@ -15,9 +15,14 @@
 <div class="chat-area">
     <div class="messages">
         <!-- Display messages here. This will be populated dynamically -->
-        <div *ngFor="let message of chatMessages">
-            {{ message.user }}: {{ message.text }}
-        </div>
+        <div *ngFor="let msg of chatMessages">
+          <div *ngIf="msg.type === 'notification'">
+              <em>{{ msg.content }}</em>
+          </div>
+          <div *ngIf="msg.type !== 'notification'">
+              <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+          </div>
+      </div>
     </div>
 
     <!-- Input for typing messages -->

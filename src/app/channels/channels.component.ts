@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChannelService } from '../services/channel.service';
 import { ActivatedRoute } from '@angular/router';
 import { SocketService } from '../services/socket.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-channels',
@@ -10,15 +11,25 @@ import { SocketService } from '../services/socket.service';
 })
 export class ChannelsComponent implements OnInit {
   channels: any[] = [];
-  channelName: string = '';
+  channelName: string =  '';
+  loggedInUserId: string | null = '';
   selectedGroupId: string = '';  // This should be set when navigating to this component
   newMessage: string = '';
   chatMessages: any[] = [];
   selectedChannelId: string = '';
-  constructor(private channelService: ChannelService, private route: ActivatedRoute,private socketService: SocketService) { }
+
+  constructor(private channelService: ChannelService,
+     private route: ActivatedRoute,
+     private socketService: SocketService,
+     private authService: AuthService
+    ){}
 
   ngOnInit(): void {
     this.selectedGroupId = this.route.snapshot.paramMap.get('groupId') || '';
+    const loggedInUser = this.authService.getLoggedInUser();
+    if (loggedInUser) {
+        this.loggedInUserId = loggedInUser.id;  // Assuming '_id' is the property that holds the user ID
+    }
     console.log('OnInit - selectedGroupId:', this.selectedGroupId);
     this.channelService.getGroupChannels(this.selectedGroupId).subscribe({
       next: (response) => {
@@ -72,17 +83,24 @@ export class ChannelsComponent implements OnInit {
   }
   
   onSendMessage(message: string) {
-    if (message.trim()) {
-        const data = {
-            message: message,
-            groupId: this.selectedGroupId,
-            channelId: this.selectedChannelId,
-            userId: 'YourUserId'  // Replace with the actual user's ID or username
-        };
-        this.socketService.sendMessage(data);
-        this.chatMessages.push({ content: message, type: 'message' });  // Add the message to the chatMessages array
-        this.newMessage = '';  // Clear the input field
+    const loggedInUser = this.authService.getLoggedInUser();
+    if (!loggedInUser) {
+      console.error('User is not logged in.');
+      return;
     }
-}
 
+    if (message.trim() && this.selectedChannelId) {
+      const data = {
+          message: message,
+          groupId: this.selectedGroupId,
+          channelId: this.selectedChannelId,
+          userId: loggedInUser.id  // Use the user's ID from the logged-in user's details
+      };
+      this.socketService.sendMessage(data);
+      this.chatMessages.push({ content: message, type: 'message' });
+      this.newMessage = '';
+    } else {
+      console.error('Invalid message or channel ID.');
+    }
+  }
 }

@@ -23,10 +23,18 @@ const addListeners = (io, socket) => {
     });
 
     socket.on('sendMessage', async (messageContent, { groupId, channelId, userId }) => {
+        if (!channelId || typeof channelId !== 'string' || channelId.length !== 24) {
+            console.error('Invalid channelId:', channelId);
+            return;
+        }
+        if (!userId || typeof userId !== 'string' || userId.length !== 24) {
+            console.error('Invalid userId:', userId);
+            return;
+        }
+    
         const roomName = `${groupId}-${channelId}`;
         io.to(roomName).emit('newMessage', messageContent);
         
-        // Save the message to the database
         const newMessage = new Message({
             content: messageContent,
             sender: userId,
@@ -38,7 +46,6 @@ const addListeners = (io, socket) => {
             console.error('Error saving message:', error);
         }
     });
-    
     
 
     socket.on('leaveChannel', ({ groupId, channelId, username }) => {

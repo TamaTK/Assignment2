@@ -10,6 +10,7 @@
 /assignment-server/node_modules
 /assignment-server/views
 /assigment-front/node_modules
+/node_modules
 npm-debug.log
 yarn-error.log
 

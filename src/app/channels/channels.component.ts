@@ -66,7 +66,7 @@ export class ChannelsComponent implements OnInit {
   
   onSendMessage(message: string) {
     if (message.trim()) {
-        this.socketService.sendMessage(message, { groupId: this.selectedGroupId, channelId: this.selectedChannelId });
+        this.socketService.sendMessage(message);
         this.newMessage = '';  // Clear the input field
     }
   }

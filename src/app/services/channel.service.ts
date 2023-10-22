@@ -17,6 +17,7 @@ export class ChannelService {
 
   // Create a new channel within a group
   createChannel(groupId: string, channelName: string): Observable<any> {
+    console.log('createChannel Service - Payload:', { groupId, channelName });
     return this.http.post<any>(`${this.apiUrl}/channel/create-channel`, { groupId, channelName });
   }
 }

@@ -42,24 +42,9 @@ router.get('/all-groups', async (req, res) => {
 });
 
 
-router.post('/join-group', async (req, res) => {
-    const { groupId, userId } = req.body;
-    try {
-        const group = await Group.findById(groupId);
-        if (!group.members.includes(userId)) {
-            group.members.push(userId);
-            await group.save();
-            res.status(200).json({ message: 'Joined group successfully' });
-        } else {
-            res.status(400).send('User already a member of the group');
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
 router.post('/create-channel', async (req, res) => {
+    console.log('Backend - /create-channel endpoint hit');
+    console.log('Request Body:', req.body);
     const { groupId, channelName } = req.body;
     try {
         const group = await Group.findById(groupId);

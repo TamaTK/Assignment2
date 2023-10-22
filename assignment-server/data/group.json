@@ -1,0 +1,20 @@
+{
+    "group": [
+        {
+            "groupname": "Test Group",
+            "user_list": [
+                "wwc",
+                "test2",
+                "test3",
+                "3813"
+            ],
+            "group_manager_list": [
+                "Group Admin",
+                "wwc"
+            ],
+            "channels": [
+                "Test Channel"
+            ]
+        }
+    ]
+}

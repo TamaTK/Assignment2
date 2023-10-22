@@ -1,0 +1,35 @@
+{
+    "channel": [
+        {
+            "channelname": "Test Channel 1",
+            "user_list": [
+                "wwc",
+                "test1channel 1",
+                "test1channel 2",
+                "test1",
+                "test2",
+                "eiz"
+            ],
+            "groupname": "test group"
+        },
+        {
+            "channelname": "Test Channel 2",
+            "user_list": [
+                "test2channel 1",
+                "test2channel 2",
+                "wwc"
+            ],
+            "groupname": "test group"
+        },
+        {
+            "channelname": "Test Channel3",
+            "user_list": [
+                "test3channel 1",
+                "test3channel 2",
+                "test3",
+                "wwc"
+            ],
+            "groupname": "test group"
+        }
+    ]
+}

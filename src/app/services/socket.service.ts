@@ -20,8 +20,8 @@ export class SocketService {
     this.socket.emit('joinChannel', data);
   }
 
-  sendMessage(message: string) {
-    this.socket.emit('sendMessage', message, { groupId: this.currentGroupId, channelId: this.currentChannelId });
+  sendMessage(data: any) {
+    this.socket.emit('sendMessage', data.message, { groupId: data.groupId, channelId: data.channelId, userId: data.userId });
   }
 
   receiveMessage(): Observable<any> {

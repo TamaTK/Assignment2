@@ -25,7 +25,7 @@ const addListeners = (io, socket) => {
     socket.on('sendMessage', async (messageContent, { groupId, channelId, userId }) => {
         const roomName = `${groupId}-${channelId}`;
         io.to(roomName).emit('newMessage', messageContent);
-    
+        
         // Save the message to the database
         const newMessage = new Message({
             content: messageContent,
@@ -38,6 +38,7 @@ const addListeners = (io, socket) => {
             console.error('Error saving message:', error);
         }
     });
+    
     
 
     socket.on('leaveChannel', ({ groupId, channelId, username }) => {

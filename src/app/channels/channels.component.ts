@@ -73,9 +73,16 @@ export class ChannelsComponent implements OnInit {
   
   onSendMessage(message: string) {
     if (message.trim()) {
-        this.socketService.sendMessage(message);
+        const data = {
+            message: message,
+            groupId: this.selectedGroupId,
+            channelId: this.selectedChannelId,
+            userId: 'YourUserId'  // Replace with the actual user's ID or username
+        };
+        this.socketService.sendMessage(data);
         this.chatMessages.push({ content: message, type: 'message' });  // Add the message to the chatMessages array
         this.newMessage = '';  // Clear the input field
     }
-  }
+}
+
 }

@@ -1,10 +1,8 @@
-// assignment-server/routes/logout.js
-
 var express = require('express');
 var router = express.Router();
 
-/* POST logout user. */
-app.get('/logout', (req, res) => {
+/* GET logout user. */
+router.get('/', (req, res) => {
     if (req.session) {
         req.session.destroy(err => {
             if (err) {
@@ -17,6 +15,5 @@ app.get('/logout', (req, res) => {
         res.redirect('/login'); // or res.send('No active session found');
     }
 });
-
 
 module.exports = router;

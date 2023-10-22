@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Group = require('../models/group');
+var Channel = require('../models/channel');
 
 // Endpoint to create a new group
 router.post('/create-group', async (req, res) => {
@@ -48,18 +49,25 @@ router.post('/create-channel', async (req, res) => {
     const { groupId, channelName } = req.body;
     try {
         const group = await Group.findById(groupId);
-        const channel = {
+        
+        // Create the channel in the Channel model
+        const newChannel = new Channel({
             name: channelName,
-            messages: []
-        };
-        group.channels.push(channel);
+            group: groupId
+        });
+        await newChannel.save();
+
+        // Push the ObjectId of the newly created channel into the group's channels array
+        group.channels.push(newChannel._id);
         await group.save();
+
         res.status(200).send('Channel created successfully');
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 router.get('/channels/:groupId', async (req, res) => {
     const groupId = req.params.groupId;

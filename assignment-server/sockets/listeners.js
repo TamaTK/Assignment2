@@ -1,10 +1,10 @@
 const addListeners = (io, socket) => {
     console.log('New connection');
 
-    socket.on('join', ({ groupId, channelId }) => {
+    socket.on('join', ({ groupId, channelId, username }) => {
         const roomName = `${groupId}-${channelId}`;
-        console.log(`User has joined: ${roomName}`);
         socket.join(roomName);
+        io.to(roomName).emit('userJoined', username); // Notify others in the channel
     });
 
     socket.on('sendImage', (base64Image, { groupId, channelId }) => {
@@ -17,11 +17,11 @@ const addListeners = (io, socket) => {
         io.to(roomName).emit('newMessage', message);
     });
 
-    socket.on('leave', ({ groupId, channelId }) => {
-    const roomName = `${groupId}-${channelId}`;
-    console.log(`User left: ${roomName}`);
-    socket.leave(roomName);
-});
+    socket.on('leave', ({ groupId, channelId, username }) => {
+        const roomName = `${groupId}-${channelId}`;
+        socket.leave(roomName);
+        io.to(roomName).emit('userLeft', username); // Notify others in the channel
+    });
 }
 
 module.exports = addListeners;

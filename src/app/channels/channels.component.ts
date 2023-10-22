@@ -14,7 +14,7 @@ export class ChannelsComponent implements OnInit {
   selectedGroupId: string = '';  // This should be set when navigating to this component
   newMessage: string = '';
   chatMessages: any[] = [];
-
+  selectedChannelId: string = '';
   constructor(private channelService: ChannelService, private route: ActivatedRoute,private socketService: SocketService) { }
 
   ngOnInit(): void {

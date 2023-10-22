@@ -70,10 +70,14 @@ router.post('/create-channel', async (req, res) => {
 
 
 router.get('/get-group-channels/:groupId', async (req, res) => {
-    console.log('Fetching channels for groupId:', groupId);
     const groupId = req.params.groupId;
+    console.log('Fetching channels for groupId:', groupId);
+    
     try {
         const group = await Group.findById(groupId).populate('channels');
+        if (!group) {
+            return res.status(404).send('Group not found');
+        }
         res.status(200).json(group.channels);
     } catch (error) {
         console.error(error);

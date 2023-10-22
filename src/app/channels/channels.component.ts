@@ -74,10 +74,18 @@ export class ChannelsComponent implements OnInit {
   }
 
   joinChannel(channelId: string) {
+    this.selectedChannelId = channelId;  // Set the selectedChannelId when joining a channel
+    
+    const loggedInUser = this.authService.getLoggedInUser();
+    if (!loggedInUser) {
+        console.error('User is not logged in.');
+        return;
+    }
+
     const data = {
-        channelId: channelId,
-        groupId: this.selectedGroupId,  // Pass the group ID
-        username: 'YourUsername'  // Replace with the actual username
+        channelId: this.selectedChannelId,
+        groupId: this.selectedGroupId,
+        userId: loggedInUser.id  // Use the id property to get the user's ID
     };
     this.socketService.joinChannel(data);
   }
@@ -85,22 +93,22 @@ export class ChannelsComponent implements OnInit {
   onSendMessage(message: string) {
     const loggedInUser = this.authService.getLoggedInUser();
     if (!loggedInUser) {
-      console.error('User is not logged in.');
-      return;
+        console.error('User is not logged in.');
+        return;
     }
-
+    console.log("selected channel id:", this.selectedChannelId);
     if (message.trim() && this.selectedChannelId) {
-      const data = {
-          message: message,
-          groupId: this.selectedGroupId,
-          channelId: this.selectedChannelId,
-          userId: loggedInUser.id  // Use the user's ID from the logged-in user's details
-      };
-      this.socketService.sendMessage(data);
-      this.chatMessages.push({ content: message, type: 'message' });
-      this.newMessage = '';
+        const data = {
+            message: message,
+            groupId: this.selectedGroupId,
+            channelId: this.selectedChannelId,
+            userId: loggedInUser.id  // Use the id property to get the user's ID
+        };
+        this.socketService.sendMessage(data);
+        this.chatMessages.push({ content: message, type: 'message' });
+        this.newMessage = '';
     } else {
-      console.error('Invalid message or channel ID.');
+        console.error('Invalid message or channel ID.');
     }
   }
 }

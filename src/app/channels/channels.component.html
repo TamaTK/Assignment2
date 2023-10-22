@@ -8,7 +8,7 @@
 
 <!-- Existing code for displaying channels -->
 <div *ngFor="let channel of channels">
-    <a [routerLink]="['/channels', channel._id]">{{ channel.name }}</a>
+  <a [routerLink]="['/channels', channel._id]" (click)="joinChannel(channel._id)">{{ channel.name }}</a>
 </div>
 
 <!-- Chat Area -->

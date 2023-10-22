@@ -1,12 +1,20 @@
 const Message = require('../models/message');
+const User = require('../models/user');
 
 const addListeners = (io, socket) => {
     console.log('New connection');
 
-    socket.on('joinChannel', async ({ groupId, channelId, username }) => {
+    socket.on('joinChannel', async ({ groupId, channelId, userId }) => {
         const roomName = `${groupId}-${channelId}`;
+        try {
+            const user = await User.findById(userId);
+            if (user) {
+                io.to(roomName).emit('userJoined', user.username); // Notify others in the channel using the username
+            }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
         socket.join(roomName);
-        io.to(roomName).emit('userJoined', username); // Notify others in the channel
     
         try {
             // Fetch the last 5 messages for the channel

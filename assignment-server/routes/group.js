@@ -4,9 +4,9 @@ var Group = require('../models/group');
 
 // Endpoint to create a new group
 router.post('/create-group', async (req, res) => {
+    console.log('Create group endpoint hit');
     try {
         const { name, userId } = req.body;
-
         // Check if group with the same name already exists
         const existingGroup = await Group.findOne({ name: name });
         if (existingGroup) {

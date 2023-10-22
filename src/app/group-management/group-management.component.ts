@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-group-management',
@@ -9,34 +10,21 @@ import { HttpClient } from '@angular/common/http';
 export class GroupManagementComponent {
   groupName: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private groupService: GroupService) { }
 
   onSubmit() {
     const loggedInUsername = localStorage.getItem('loggedInUser');
-    if (loggedInUsername) {
-        // Fetch the user ID from the backend using the username
-        this.http.get(`http://localhost:3000/get-user-id/${loggedInUsername}`).subscribe({
-            next: (response: any) => {
-                
-                const userId = response.userId;
-                this.http.post('/group/create-group', { name: this.groupName, userId: userId })
-                    .subscribe({
-                        next: (response) => {
-                            console.log(response);
-                            alert('Group created successfully!');
-                        },
-                        error: (error) => {
-                            console.error(error);
-                            alert('Failed to create group.');
-                        }
-                    });
-            },
-            error: (error) => {
-                console.error('Failed to fetch user ID:', error);
-            }
-        });
-    } else {
-        alert('User not logged in.');
+
+    const userId = 'YOUR_USER_ID'; // Retrieve this from your authentication logic or session
+    this.groupService.createGroup(this.groupName, userId).subscribe({
+      next: (response) => {
+        console.log(response);
+        alert('Group created successfully!');
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Failed to create group.');
+      }
+    });
     }
   }
-}

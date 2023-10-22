@@ -1,4 +1,4 @@
-import { UserModel } from '../models/user';
+import { UserModel } from './user';
 
 /* Channels only need an array of Users within the group, and a Group ID. Information about roles
 should probably come from the Group, not the Channel. */ 

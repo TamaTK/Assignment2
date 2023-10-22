@@ -1,5 +1,5 @@
-import { UserModel } from '../models/user';
-import { ChannelModel } from '../models/channel';
+import { UserModel } from './user';
+import { ChannelModel } from './channel';
 
 /* Groups should have an ID, even though Names should probably be unique. Groups should 
 have an array of admin users, an array of channels within the group, and an array of members

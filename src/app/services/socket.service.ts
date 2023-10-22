@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client'; 'socket.io-client';
+import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class SocketService {
   private socket: any;
   public currentGroupId: string = '';
+  public currentChannelId: string = '';
 
   constructor() {
     this.socket = io('http://localhost:3000');
@@ -15,16 +16,17 @@ export class SocketService {
 
   joinChannel(data: any) {
     this.currentGroupId = data.groupId;
+    this.currentChannelId = data.channelId;
     this.socket.emit('joinChannel', data);
   }
 
   sendMessage(message: string) {
-    this.socket.emit('sendMessage', { groupId: this.currentGroupId, message: message });
+    this.socket.emit('sendMessage', message, { groupId: this.currentGroupId, channelId: this.currentChannelId });
   }
 
   receiveMessage(): Observable<any> {
     return new Observable((observer) => {
-      this.socket.on('receiveMessage', (message: any) => {
+      this.socket.on('newMessage', (message: any) => {
         observer.next(message);
       });
     });
@@ -33,6 +35,14 @@ export class SocketService {
   userJoined(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('userJoined', (username: any) => {
+        observer.next(username);
+      });
+    });
+  }
+
+  userLeft(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('userLeft', (username: any) => {
         observer.next(username);
       });
     });

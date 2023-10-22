@@ -1,5 +1,11 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://new:new@assignment1.onadgeh.mongodb.net/test/?retryWrites=true&w=majority&appName=AtlasApp";
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://new:new@assignment1.onadgeh.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on('connected', () => {
+  console.log('Connected to MongoDB');
+});
+mongoose.connection.on('error', (err) => {
+  console.error('Error connecting to MongoDB:', err);
+});
 
 
 var createError = require('http-errors');

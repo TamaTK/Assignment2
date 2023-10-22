@@ -18,6 +18,10 @@ export class GroupService {
     });
   }
 
+  getUserGroups(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/group/get-user-groups/${userId}`);
+  }
+
 
   getAllGroups(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/group/all-groups`);

@@ -10,28 +10,17 @@ export class GroupsComponent implements OnInit {
   groups: any[] = [];
   userId: string = 'YOUR_USER_ID'; // Fetch this from your authentication/session logic
 
+  
   constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
-    this.groupService.getAllGroups().subscribe({
+    this.groupService.getUserGroups(this.userId).subscribe({
       next: (response) => {
-        this.groups = response;
+        this.groups = response.groups;
       },
       error: (error) => {
         console.error(error);
         alert('Failed to fetch groups.');
-      }
-    });
-  }
-
-  joinGroup(groupId: string): void {
-    this.groupService.joinGroup(groupId, this.userId).subscribe({
-      next: (response) => {
-        alert('Joined group successfully!');
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to join group.');
       }
     });
   }

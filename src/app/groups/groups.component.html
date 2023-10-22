@@ -1,10 +1,9 @@
 <p>groups works!</p>
 <a routerLink="/group-management">Create Group</a>
 
-<h2>All Groups</h2>
+<h2>Your Groups</h2>
 <ul>
   <li *ngFor="let group of groups">
     {{ group.name }}
-    <button (click)="joinGroup(group._id)">Join Group</button>
   </li>
 </ul>

@@ -14,7 +14,7 @@ export class GroupManagementComponent {
 
   onSubmit() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');  // Parse the string to get the user object
-    const userId = loggedInUser._id;  // Extract the userId from the user object
+    const userId = loggedInUser.id;  // Extract the userId from the user object
   
     if (userId) {
       this.groupService.createGroup(this.groupName, userId).subscribe({

@@ -10,7 +10,7 @@ router.post('/create-group', async (req, res) => {
         // Check if group with the same name already exists
         const existingGroup = await Group.findOne({ name: name });
         if (existingGroup) {
-            return res.status(400).json({ message: 'Group with this name already exists', newgroup: { newGroup } });
+            return res.status(400).json({ message: 'Group with this name already exists' });
         }
 
         // Create a new group

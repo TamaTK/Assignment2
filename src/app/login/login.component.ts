@@ -23,8 +23,8 @@ export class LoginComponent {
         if (response && response.user) {
           // Authentication successful, navigate to the groups page
           alert("Authentication successful");
+          localStorage.setItem('loggedInUser', JSON.stringify(response.user));  // Set the loggedInUser in local storage
           this.router.navigate(['/groups']);
-          // login storage
         } else {
           // Authentication failed, handle the error or display an error message
           console.error('Authentication failed');

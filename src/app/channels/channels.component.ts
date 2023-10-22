@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChannelService } from '../services/channel.service';
 import { ActivatedRoute } from '@angular/router';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-channels',
@@ -12,7 +13,7 @@ export class ChannelsComponent implements OnInit {
   channelName: string = '';
   selectedGroupId: string = '';  // This should be set when navigating to this component
 
-  constructor(private channelService: ChannelService, private route: ActivatedRoute) { }
+  constructor(private channelService: ChannelService, private route: ActivatedRoute,private socketService: SocketService) { }
 
   ngOnInit(): void {
     this.selectedGroupId = this.route.snapshot.paramMap.get('groupId') || '';
@@ -25,6 +26,13 @@ export class ChannelsComponent implements OnInit {
         console.error(error);
         alert('Failed to fetch channels.');
       }
+    });
+    this.socketService.userJoined().subscribe((username) => {
+      // Notify in the chat that the user has joined
+    });
+  
+    this.socketService.receiveMessage().subscribe((message) => {
+      // Update the chat UI with the new message
     });
   }
 
@@ -43,5 +51,21 @@ export class ChannelsComponent implements OnInit {
         alert('Failed to create channel.');
       }
     });
+  }
+
+  joinChannel(channelId: string) {
+    const data = {
+      channelId: channelId,
+      username: 'YourUsername'  // Replace with the actual username
+    };
+    this.socketService.joinChannel(data);
+  }
+  
+  onSendMessage(message: string) {
+    const data = {
+      channelId: 'YourChannelId',  // Replace with the actual channelId
+      message: message
+    };
+    this.socketService.sendMessage(data);
   }
 }

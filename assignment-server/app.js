@@ -49,7 +49,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(session({
-  secret: 'your-secret-key', // Change this to a secret key of your choice
+  secret: 'asdf', // Change this to a secret key of your choice
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false } // Set to true if you're using HTTPS

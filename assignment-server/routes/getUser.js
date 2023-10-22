@@ -1,3 +1,7 @@
+var User = require('../models/user');
+var express = require('express');
+var router = express.Router();
+
 router.get('/get-user-id/:username', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });

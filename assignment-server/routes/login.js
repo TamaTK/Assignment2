@@ -23,11 +23,12 @@ router.post('/', async function(req, res) {
         }
 
         // If authentication is successful
-        res.status(200).json({ message: 'Authentication successful', user: { username } });
         req.session.user = {
             id: user._id,
             username: user.username
         };
+        res.status(200).json({ message: 'Authentication successful', user: { username } });
+
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');

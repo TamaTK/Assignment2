@@ -15,8 +15,9 @@ export class GroupManagementComponent {
     const loggedInUsername = localStorage.getItem('loggedInUser');
     if (loggedInUsername) {
         // Fetch the user ID from the backend using the username
-        this.http.get(`/get-user-id/${loggedInUsername}`).subscribe({
+        this.http.get(`http://localhost:3000/get-user-id/${loggedInUsername}`).subscribe({
             next: (response: any) => {
+                
                 const userId = response.userId;
                 this.http.post('/group/create-group', { name: this.groupName, userId: userId })
                     .subscribe({

@@ -61,7 +61,7 @@ router.post('/create-channel', async (req, res) => {
         group.channels.push(newChannel._id);
         await group.save();
 
-        res.status(200).send('Channel created successfully');
+        res.status(200).json({ message: 'Channel creation successful', newChannel: { newChannel } });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -69,7 +69,8 @@ router.post('/create-channel', async (req, res) => {
 });
 
 
-router.get('/channels/:groupId', async (req, res) => {
+router.get('/get-group-channels/:groupId', async (req, res) => {
+    console.log('Fetching channels for groupId:', groupId);
     const groupId = req.params.groupId;
     try {
         const group = await Group.findById(groupId).populate('channels');

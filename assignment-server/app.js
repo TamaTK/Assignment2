@@ -14,10 +14,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
+var logoutRouter = require('./routes/logout');
 
 var app = express();
 
@@ -31,6 +33,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,5 +47,11 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 });
 
+app.use(session({
+  secret: 'your-secret-key', // Change this to a secret key of your choice
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if you're using HTTPS
+}));
 
 module.exports = app;

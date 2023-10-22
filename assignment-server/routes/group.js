@@ -48,7 +48,7 @@ router.post('/create-channel', async (req, res) => {
     console.log('Request Body:', req.body);
     const { groupId, channelName } = req.body;
     try {
-        const group = await Group.findById(groupId);
+        const group = await Group.findById(groupId)
         
         // Create the channel in the Channel model
         const newChannel = new Channel({
@@ -72,7 +72,7 @@ router.post('/create-channel', async (req, res) => {
 router.get('/channels/:groupId', async (req, res) => {
     const groupId = req.params.groupId;
     try {
-        const group = await Group.findById(groupId);
+        const group = await Group.findById(groupId).populate('channels');
         res.status(200).json(group.channels);
     } catch (error) {
         console.error(error);

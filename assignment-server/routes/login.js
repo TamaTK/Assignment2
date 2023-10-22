@@ -1,23 +1,31 @@
+var User = require('../models/user');
 var express = require('express');
 var router = express.Router();
 
-/* GET login listing. */
-router.get('/', function(req, res, next) {
-  res.send('hello with a resource');
+router.post('/', async function(req, res) {
+    try {
+        const { username, password } = req.body;
+
+        // Find the user by username
+        let user = await User.findOne({ username: username });
+
+        console.log('Queried user:', user);  // Log the user returned from the database
+
+        // If user not found
+        if (!user) {
+            return res.status(401).json({ message: 'Authentication failed. User not found.' });
+        }
+
+        // If user found, compare the provided password with the stored password
+        if (user.password !== password) {
+            return res.status(401).json({ message: 'Authentication failed. Wrong password.' });
+        }
+
+        // If authentication is successful
+        res.status(200).json({ message: 'Authentication successful', user: { username } });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
-
-// Handle POST requests for the /login endpoint
-router.post('/', function(req, res) {
-  console.log('Received a login request from login.js');
-  const { username, password } = req.body;
-
-  if (username === 'super' && password === '123') {
-    // Authentication successful
-    res.status(200).json({ message: 'Authentication successful', user: { username } }); 
-  } else {
-    // Authentication failed
-    res.status(401).json({ message: 'Authentication failed' });
-  }
-});
-
-module.exports = router;

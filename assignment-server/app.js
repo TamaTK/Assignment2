@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://new:new@assignment1.onadgeh.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+const uri = "mongodb+srv://new:new@assignment1.onadgeh.mongodb.net/test/?retryWrites=true&w=majority&appName=AtlasApp";
 
 
 var createError = require('http-errors');

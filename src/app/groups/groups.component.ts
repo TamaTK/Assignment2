@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../services/group.service';
 import { AuthService } from '../services/auth.service';  // Import AuthService
+import { Router } from '@angular/router';  // Import Router
+
 
 @Component({
   selector: 'app-groups',
@@ -11,7 +13,7 @@ export class GroupsComponent implements OnInit {
   groups: any[] = [];
   userId: string = '';  // Initialize as an empty string
 
-  constructor(private groupService: GroupService, private authService: AuthService) { }  // Inject AuthService
+  constructor(private groupService: GroupService, private authService: AuthService, private router: Router) { }  // Inject AuthService
 
   ngOnInit(): void {
     this.groupService.getAllGroups().subscribe({
@@ -24,9 +26,8 @@ export class GroupsComponent implements OnInit {
         }
     });
   }
-  
+
   viewChannels(groupId: string) {
-    // Navigate to the channels component and pass the groupId
-    // You'll need to set up Angular routing for this
+    this.router.navigate(['/channels', groupId]);  // Navigate to the channels component and pass the groupId
   }
 }

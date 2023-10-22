@@ -13,16 +13,14 @@ export class GroupsComponent implements OnInit {
   
   constructor(private groupService: GroupService) { }
 
-  ngOnInit(): void {
-    this.groupService.getUserGroups(this.userId).subscribe({
-      next: (response) => {
-        this.groups = response.groups;
+  ngOnInit() {
+    this.groupService.getGroups().subscribe(
+      (data) => {
+        this.groups = data;
       },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to fetch groups.');
+      (error) => {
+        console.error('Error fetching groups:', error);
       }
-    });
+    );
   }
 }
-

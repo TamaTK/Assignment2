@@ -25,7 +25,7 @@ export class LoginComponent {
           alert("Authentication successful");
           this.router.navigate(['/groups']);
           // login storage
-          localStorage.setItem('loggedInUser', this.username);
+          this.authService.setUserId(response.user.id);
         } else {
           // Authentication failed, handle the error or display an error message
           console.error('Authentication failed');

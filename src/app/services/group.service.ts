@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GroupModel } from '../models/group';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class GroupService {
     });
   }
 
-  getUserGroups(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/group/get-user-groups/${userId}`);
+  getGroups(): Observable<GroupModel[]> {
+    return this.http.get<GroupModel[]>(`${this.apiUrl}/get-groups`);
   }
 
 

@@ -27,7 +27,7 @@ router.post('/', async function(req, res) {
             id: user._id,
             username: user.username
         };
-        res.status(200).json({ message: 'Authentication successful', user: { username } });
+        res.status(200).json({ message: 'Authentication successful', user: { id: user._id, username: user.username } });
 
     } catch (error) {
         console.error(error);

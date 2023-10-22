@@ -13,7 +13,7 @@ export class GroupManagementComponent {
   constructor(private groupService: GroupService) { }
 
   onSubmit() {
-    const loggedInUsername = localStorage.getItem('loggedInUser');
+    const loggedInUser = localStorage.getItem('loggedInUser');
 
     const userId = 'YOUR_USER_ID'; // Retrieve this from your authentication logic or session
     this.groupService.createGroup(this.groupName, userId).subscribe({

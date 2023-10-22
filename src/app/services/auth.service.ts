@@ -8,7 +8,7 @@ import { UserModel } from '../models/user';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
-
+  private userId: string | null = null;
   constructor(private http: HttpClient) {}
 
   // Method for user login
@@ -17,5 +17,13 @@ export class AuthService {
       username,
       password,
     });
+  }
+
+  setUserId(id: string) {
+    this.userId = id;
+  }
+
+  getUserId(): string | null {
+    return this.userId;
   }
 }

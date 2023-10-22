@@ -31,9 +31,10 @@ router.post('/create-group', async (req, res) => {
     }
 });
 
-router.get('/all-groups', async (req, res) => {
+router.get('/get-groups', async (req, res) => {
     try {
-        const groups = await Group.find({});
+        const userId = req.session.user.id;
+        const groups = await Group.find({ $or: [{ admins: userId }, { members: userId }] });
         res.status(200).json(groups);
     } catch (error) {
         console.error(error);

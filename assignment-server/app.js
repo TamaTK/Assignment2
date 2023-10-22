@@ -29,6 +29,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(session({
+  secret: 'asdf', // Change this to a secret key of your choice
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if you're using HTTPS
+}));
 
 app.use('/group', groupRoute);
 app.use('/', indexRouter);
@@ -48,11 +54,6 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 });
 
-app.use(session({
-  secret: 'asdf', // Change this to a secret key of your choice
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // Set to true if you're using HTTPS
-}));
+
 
 module.exports = app;

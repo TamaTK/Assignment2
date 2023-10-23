@@ -9,6 +9,11 @@ export class ChannelService {
 
   constructor() {}
 
+  /**
+   * Fetches all channels of a specific group.
+   * @param groupId - The ID of the group.
+   * @returns A promise containing the channels or null if an error occurs.
+   */
   async getGroupChannels(groupId: string): Promise<any> {
     try {
       const response = await axios.get<any>(`${this.apiUrl}/group/get-group-channels/${groupId}`);
@@ -19,6 +24,12 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Creates a new channel within a specific group.
+   * @param groupId - The ID of the group.
+   * @param channelName - The name of the new channel.
+   * @returns A promise containing the created channel or null if an error occurs.
+   */
   async createChannel(groupId: string, channelName: string): Promise<any> {
     try {
       const response = await axios.post<any>(`${this.apiUrl}/group/create-channel`, { groupId, channelName });

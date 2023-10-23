@@ -10,21 +10,32 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private userRole = new BehaviorSubject<string>(''); // Initialize with an empty role
   currentRole = this.userRole.asObservable();
+
   constructor() {}
 
-  login(username: string, password: string): Promise<any> {
-    return axios.post(`${this.apiUrl}/login`, { username, password })
-    .then(response => {
-        if (response.data && response.data.token) {
-            localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-            localStorage.setItem('token', response.data.token); // Storing the token
-            this.userRole.next(response.data.user.role); // Update the BehaviorSubject with the user's role
-        }
-        return response.data;
-    });
-}
+  /**
+   * Attempt to log in a user with the provided credentials.
+   * @param username - The user's username.
+   * @param password - The user's password.
+   * @returns A Promise that resolves with the authentication response.
+   */
+  async login(username: string, password: string): Promise<any> {
+    const response = await axios.post(`${this.apiUrl}/login`, { username, password });
+    if (response.data) {
+      // Store user and token in localStorage
+      localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+      console.log(localStorage.setItem('currentUser', JSON.stringify(response.data.user)))
+      // Update the BehaviorSubject with the user's role
+      this.userRole.next(response.data.user.role);
+    }
+    return response.data;
+  }
 
+  /**
+   * Retrieve the logged-in user from localStorage.
+   * @returns The logged-in user or null if not found.
+   */
   getLoggedInUser(): UserModel | null {
-    return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
   }
 }

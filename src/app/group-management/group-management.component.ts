@@ -12,21 +12,27 @@ export class GroupManagementComponent {
 
   constructor(private groupService: GroupService) { }
 
+  /**
+   * Handle the form submission to create a new group.
+   */
   onSubmit() {
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');  // Parse the string to get the user object
-    const userId = loggedInUser.id;  // Extract the userId from the user object
-  
-    if (userId) {
-      this.groupService.createGroup(this.groupName, userId)
-    .then(response => {
-      console.log(response);
-      alert('Group created successfully!');
-    })
-    .catch(error => {
-      console.error(error);
-      alert('Failed to create group.');
-    });
+    // Parse the logged-in user from localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    
+    // Extract the userId from the user object
+    const userId = loggedInUser.id;
 
-   }
+    if (userId) {
+      // Call the group service to create a new group
+      this.groupService.createGroup(this.groupName, userId)
+        .then(response => {
+          console.log(response);
+          alert('Group created successfully!');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Failed to create group.');
+        });
+    }
   }
 }

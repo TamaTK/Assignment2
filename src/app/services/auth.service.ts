@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/';
+  private apiUrl = 'http://localhost:3000';
   private userRole = new BehaviorSubject<string>(''); // Initialize with an empty role
   currentRole = this.userRole.asObservable();
   constructor() {}

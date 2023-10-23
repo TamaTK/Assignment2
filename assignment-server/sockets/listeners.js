@@ -35,6 +35,8 @@ const addListeners = (io, socket) => {
     });
 
     socket.on('sendMessage', async (messageContent, { groupId, channelId, userId }) => {
+
+
         if (!channelId || typeof channelId !== 'string' || channelId.length !== 24) {
             console.error('Invalid channelId:', channelId);
             return;

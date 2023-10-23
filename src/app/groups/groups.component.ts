@@ -16,14 +16,13 @@ export class GroupsComponent implements OnInit {
   constructor(private groupService: GroupService, private authService: AuthService, private router: Router) { }  // Inject AuthService
 
   ngOnInit(): void {
-    this.groupService.getAllGroups().subscribe({
-        next: (groups) => {
-            this.groups = groups;
-        },
-        error: (error) => {
-            console.error(error);
-            alert('Failed to fetch all groups.');
-        }
+    this.groupService.getAllGroups()
+    .then(groups => {
+      this.groups = groups;
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Failed to fetch all groups.');
     });
   }
 

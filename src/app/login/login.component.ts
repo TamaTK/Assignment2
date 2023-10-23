@@ -17,24 +17,20 @@ export class LoginComponent {
 
   login() {
     console.log('Login method called')
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        console.log('Next callback called with response:', response);
-        if (response && response.user) {
-          // Authentication successful, navigate to the groups page
-          alert("Authentication successful");
-          localStorage.setItem('loggedInUser', JSON.stringify(response.user));  // Set the loggedInUser in local storage
-          this.router.navigate(['/groups']);
-        } else {
-          // Authentication failed, handle the error or display an error message
-          console.error('Authentication failed');
-        }
-      },
-      error: (error) => {
-        this.errorMessage = 'Login failed. Please check your credentials.';
-        console.error('Error callback called with error:', error);
-        console.error('An error occurred:', error);
-      },
+    this.authService.login(this.username, this.password)
+    .then(response => {
+      console.log('Response:', response);
+      if (response && response.user) {
+        alert("Authentication successful");
+        localStorage.setItem('loggedInUser', JSON.stringify(response.user));
+        this.router.navigate(['/groups']);
+      } else {
+        console.error('Authentication failed');
+      }
+    })
+    .catch(error => {
+      this.errorMessage = 'Login failed. Please check your credentials.';
+      console.error('An error occurred:', error);
     });
   }
-}
+}nts

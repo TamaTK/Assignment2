@@ -17,18 +17,16 @@ export class GroupManagementComponent {
     const userId = loggedInUser.id;  // Extract the userId from the user object
   
     if (userId) {
-      this.groupService.createGroup(this.groupName, userId).subscribe({
-        next: (response) => {
-          console.log(response);
-          alert('Group created successfully!');
-        },
-        error: (error) => {
-          console.error(error);
-          alert('Failed to create group.');
-        }
-      });
-    } else {
-      alert('Failed to fetch user ID. Please ensure you are logged in.');
-    }
+      this.groupService.createGroup(this.groupName, userId)
+    .then(response => {
+      console.log(response);
+      alert('Group created successfully!');
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Failed to create group.');
+    });
+
+   }
   }
 }

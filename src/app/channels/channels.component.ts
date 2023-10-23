@@ -40,6 +40,7 @@ export class ChannelsComponent implements OnInit {
         alert('Failed to fetch channels.');
       }
     });
+    
     // Listen for user join notifications
     this.socketService.userJoined().subscribe((username) => {
     this.chatMessages.push({ content: `${username} has joined the channel.`, type: 'notification' });
@@ -61,15 +62,14 @@ export class ChannelsComponent implements OnInit {
     console.log('createChannel - Before API call');
     console.log('selectedGroupId:', this.selectedGroupId);
     console.log('channelName:', this.channelName);
-    this.channelService.createChannel(this.selectedGroupId, this.channelName).subscribe({
-      next: (response) => {
-        alert('Channel created successfully!');
-        this.channels.push({ name: this.channelName });  // Add the new channel to the list
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to create channel.');
-      }
+    this.channelService.createChannel(this.selectedGroupId, this.channelName)
+    .then(response => {
+      alert('Channel created successfully!');
+      this.channels.push({ name: this.channelName });
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Failed to create channel.');
     });
   }
 

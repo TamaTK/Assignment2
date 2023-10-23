@@ -31,15 +31,15 @@ export class ChannelsComponent implements OnInit {
         this.loggedInUserId = loggedInUser.id;  // Assuming '_id' is the property that holds the user ID
     }
     console.log('OnInit - selectedGroupId:', this.selectedGroupId);
-    this.channelService.getGroupChannels(this.selectedGroupId).subscribe({
-      next: (response) => {
-        this.channels = response;
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Failed to fetch channels.');
-      }
+    this.channelService.getGroupChannels(this.selectedGroupId)
+    .then(response => {
+      this.channels = response;
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Failed to fetch channels.');
     });
+
     
     // Listen for user join notifications
     this.socketService.userJoined().subscribe((username) => {

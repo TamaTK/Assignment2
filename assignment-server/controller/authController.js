@@ -1,35 +1,30 @@
 const User = require('../models/user');
 
 exports.login = async (req, res) => {
-    try {
-        const { username, password } = req.body;
+  try {
+    // ... existing login logic ...
 
-        // Find the user by username
-        let user = await User.findOne({ username: username });
-
-        console.log('Queried user:', user);  // Log the user returned from the database
-
-        // If user not found
-        if (!user) {
-            return res.status(401).json({ message: 'Authentication failed. User not found.' });
-        }
-
-        // If user found, compare the provided password with the stored password
-        if (user.password !== password) {
-            return res.status(401).json({ message: 'Authentication failed. Wrong password.' });
-        }
-
-        // If authentication is successful
-        req.session.user = {
-            id: user._id,
-            username: user.username
-        };
-        res.status(200).json({ message: 'Authentication successful', user: { id: user._id, username: user.username } });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+    // Find the user to get their role
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(401).json({ message: "Auth failed" });
     }
+
+    // ... existing token creation logic ...
+
+    // Include the user's role in the response alongside the token
+    res.status(200).json({
+      message: "Auth successful",
+      token: token,
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role // Ensure 'role' is part of your User model schema
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
 };
 
 exports.register = async (req, res) => {

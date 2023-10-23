@@ -6,33 +6,81 @@ Imagine a simple chat platform where users can communicate in real-time, similar
 As soon as there is a modular, working change to the assignment,
 I push and commit changes to the repo on GitHub. I have used branches in the instance of when the modular change is not working because another component, service, or something modular is required to fix an error.
 
-# Angular Architecture (Components, Services, Routes, Models)
-Models:
- user,
- role,
- group,
- channel
+## Angular Architecture
 
-Components:
- login
- groups
- channels
- user-management
- group-management
- channel-management
+### Components
 
-# Data Structures (Client and Server Side)
-- **User**:
-  - Backend: [User Model (Server)](https://github.com/TamaTK/Assignment2/blob/master/assignment-server/models/user.js)
-  - Frontend: [User Model (Client)](https://github.com/TamaTK/Assignment2/blob/master/src/app/models/user.ts)
-- **Group**:
-  - Backend: [Group Model (Server)](https://github.com/TamaTK/Assignment2/blob/master/assignment-server/models/group.js)
-  - Frontend: [Group Model (Client)](https://github.com/TamaTK/Assignment2/blob/master/src/app/models/group.ts)
-- **Channel**:
-  - Backend: [Channel Model (Server)](https://github.com/TamaTK/Assignment2/blob/master/assignment-server/models/channel.js)
-  - Frontend: [Channel Model (Client)](https://github.com/TamaTK/Assignment2/blob/master/src/app/models/channel.ts)
-- **Message**: [Message Model (Server)](https://github.com/TamaTK/Assignment2/blob/master/assignment-server/models/message.js)
-- **Role**: [Role Model (Client)](https://github.com/TamaTK/Assignment2/blob/master/src/app/models/role.ts)
+#### 1. **AppComponent**
+- The root component of the application.
+- Contains the main view of the application.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/app.component.ts)
+
+#### 2. **LoginComponent**
+- Provides the login functionality.
+- Uses the `AuthService` to authenticate users.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/login/login.component.ts)
+
+#### 3. **GroupsComponent**
+- Displays the list of groups.
+- Uses the `GroupService` to fetch all groups.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/groups/groups.component.ts)
+
+#### 4. **ChannelsComponent**
+- Displays the list of channels within a group.
+- Provides functionality to create a channel and join a channel.
+- Uses the `ChannelService` and `SocketService` for various operations.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/channels/channels.component.ts)
+
+#### 5. **GroupManagementComponent**
+- Provides the functionality to create a new group.
+- Uses the `GroupService` to create a group.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/group-management/group-management.component.ts)
+
+#### 6. **UserManagementComponent**
+- Currently, this component doesn't have any specific functionality implemented.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/user-management/user-management.component.ts)
+
+### Services
+
+#### 1. **AuthService**
+- Provides authentication-related functionalities.
+- Contains methods for user login and fetching the logged-in user's details.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/auth.service.ts)
+
+#### 2. **ChannelService**
+- Provides functionalities related to channels.
+- Contains methods to fetch channels of a group and create a new channel.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/channel.service.ts)
+
+#### 3. **GroupService**
+- Provides functionalities related to groups.
+- Contains methods to create a group, fetch all groups, join a group, create a channel within a group, get channels of a group, and get user groups.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/group.service.ts)
+
+#### 4. **SocketService**
+- Provides socket-related functionalities.
+- Contains methods to join a channel, send a message, receive a message, and listen for user join/leave notifications.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/socket.service.ts)
+
+#### 5. **LocalStorageService**
+- Currently, this service doesn't have any specific functionality implemented.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/local-storage.service.ts)
+
+#### 6. **UserService**
+- Currently, this service doesn't have any specific functionality implemented.
+[View Code](https://github.com/TamaTK/Assignment2/blob/master/src/app/services/user.service.ts)
+
+### Routes
+
+Based on the `AppRoutingModule`, the following routes are defined:
+
+- **/login** - Navigates to the `LoginComponent`.
+- **/groups** - Navigates to the `GroupsComponent`.
+- **/channels/:groupId** - Navigates to the `ChannelsComponent` with a specific group ID.
+- **/user-management** - Navigates to the `UserManagementComponent`.
+- **/group-management** - Navigates to the `GroupManagementComponent`.
+- **/** - Redirects to the `/login` route.
+
 ## Data Structures
 
 ### 1. **User**

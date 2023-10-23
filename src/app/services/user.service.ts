@@ -9,7 +9,11 @@ export class UserService {
 
   constructor() {}
 
-  // Example method to fetch user details by ID
+  /**
+   * Fetches details of a specific user by their ID.
+   * @param userId - The ID of the user.
+   * @returns A promise containing the user's details or null if an error occurs.
+   */
   async getUserById(userId: string): Promise<any> {
     try {
       const response = await axios.get<any>(`${this.apiUrl}/user/${userId}`);

@@ -1,6 +1,6 @@
 // Seed the Super Admin role with its permissions
 await Role.create({
-    roleName: 'SuperAdmin',
+    roleName: 'superAdmin',
     rolePermissions: [
       'promoteGroupAdmin',
       'removeChatUsers',
@@ -11,7 +11,7 @@ await Role.create({
   
   // Seed the Group Admin role with its permissions
   await Role.create({
-    roleName: 'GroupAdmin',
+    roleName: 'groupAdmin',
     rolePermissions: [
       'createNewGroups',
       'createNewChannels',
@@ -25,7 +25,7 @@ await Role.create({
   
   // Seed the User role with its permissions
   await Role.create({
-    roleName: 'User',
+    roleName: 'chatUser',
     rolePermissions: [
       'registerChat',
       'exitGroup',

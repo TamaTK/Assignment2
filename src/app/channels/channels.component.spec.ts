@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChannelsComponent } from './channels.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 describe('ChannelsComponent', () => {
   let component: ChannelsComponent;
@@ -10,7 +11,10 @@ describe('ChannelsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ChannelsComponent ],
-      imports: [ HttpClientTestingModule ] // Add HttpClientTestingModule to imports
+      imports: [ HttpClientTestingModule, FormsModule ],
+      providers: [ // Add providers array
+            { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1234' } } } }
+        ]
     })
     .compileComponents();
   });

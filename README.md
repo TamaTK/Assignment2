@@ -6,6 +6,45 @@ Imagine a simple chat platform where users can communicate in real-time, similar
 As soon as there is a modular, working change to the assignment,
 I push and commit changes to the repo on GitHub. I have used branches in the instance of when the modular change is not working because another component, service, or something modular is required to fix an error.
 
+## Getting Started
+
+Follow these instructions to set up and run the project locally.
+
+### Prerequisites
+
+#### Ensure you have [Node.js](https://nodejs.org/) installed.
+#### Install [Angular CLI](https://cli.angular.io/) globally:
+   ```bash
+   npm install -g @angular/cli
+```
+### Installation 
+    ```bash
+    git clone https://github.com/TamaTK/Assignment2.git
+    cd Assignment2
+```
+
+### Install Backend Dependencies
+#### Navigate to the server directory and install the necessary packages
+    ```bash
+    cd assignment-server
+    npm install
+    ``` 
+### Install Frontend Dependencies
+#### Navigate to the frontend directory and install the necessary packages:
+```bash 
+    cd ../
+    npm install
+```
+
+### Running the Application
+```bash
+    npm start
+    npm serve
+```
+
+    
+
+    
 ## Angular Architecture
 
 ### Components
@@ -236,7 +275,3 @@ Based on the `AppRoutingModule`, the following routes are defined:
 - **name**: 
   - **Type**: String
   - **Description**: Represents the role's name. Possible values include "Super Admin", "Group Admin", and "Chat User".
-
-# List of server side routes, parameters, return values and purpose
-
-# Interaction between client and server

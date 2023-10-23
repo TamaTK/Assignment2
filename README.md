@@ -14,32 +14,32 @@ Follow these instructions to set up and run the project locally.
 
 #### Ensure you have [Node.js](https://nodejs.org/) installed.
 #### Install [Angular CLI](https://cli.angular.io/) globally:
-   ```bash
-   npm install -g @angular/cli
+```bash
+npm install -g @angular/cli
 ```
 ### Installation 
-    ```bash
-    git clone https://github.com/TamaTK/Assignment2.git
-    cd Assignment2
+```bash
+git clone https://github.com/TamaTK/Assignment2.git
+cd Assignment2
 ```
 
 ### Install Backend Dependencies
 #### Navigate to the server directory and install the necessary packages
-    ```bash
-    cd assignment-server
-    npm install
-    ``` 
+```bash
+cd assignment-server
+npm install
+``` 
 ### Install Frontend Dependencies
 #### Navigate to the frontend directory and install the necessary packages:
 ```bash 
-    cd ../
-    npm install
+cd ../
+npm install
 ```
 
 ### Running the Application
 ```bash
-    npm start
-    npm serve
+npm start
+npm serve
 ```
 
     

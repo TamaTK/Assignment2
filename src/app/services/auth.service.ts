@@ -12,18 +12,17 @@ export class AuthService {
   currentRole = this.userRole.asObservable();
   constructor() {}
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, { username, password }).pipe(
-      tap((response) => {
-        if (response && response.token) {
-          localStorage.setItem('currentUser', JSON.stringify(response.user));
-          localStorage.setItem('userRole', response.user.role); // Storing user's role
-          this.currentUserSubject.next(response.user);
+  login(username: string, password: string): Promise<any> {
+    return axios.post(`${this.apiUrl}/login`, { username, password })
+    .then(response => {
+        if (response.data && response.data.token) {
+            localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+            localStorage.setItem('token', response.data.token); // Storing the token
+            this.userRole.next(response.data.user.role); // Update the BehaviorSubject with the user's role
         }
-        return response;
-      })
-    );
-  }
+        return response.data;
+    });
+}
 
   getLoggedInUser(): UserModel | null {
     return JSON.parse(localStorage.getItem('loggedInUser') || 'null');

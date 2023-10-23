@@ -1,16 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ChannelService } from './channel.service';
 
 describe('ChannelService', () => {
   let service: ChannelService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ChannelService);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
   });
 
   it('should be created', () => {
+    const service: ChannelService = TestBed.inject(ChannelService);
     expect(service).toBeTruthy();
   });
 });

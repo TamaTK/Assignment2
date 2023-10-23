@@ -33,4 +33,4 @@ export class LoginComponent {
       console.error('An error occurred:', error);
     });
   }
-}nts
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { UserModel } from '../models/user';
 
@@ -9,17 +9,21 @@ import { UserModel } from '../models/user';
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  // Existing method for user login
-  login(username: string, password: string): Observable<{ message: string; user: UserModel } | null> {
-    return this.http.post<{ message: string; user: UserModel } | null>(`${this.apiUrl}/login`, {
-      username,
-      password,
-    });
+  async login(username: string, password: string): Promise<{ message: string; user: UserModel } | null> {
+    try {
+      const response = await axios.post<{ message: string; user: UserModel } | null>(`${this.apiUrl}/login`, {
+        username,
+        password,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error during login:', error);
+      return null;
+    }
   }
 
-  // New method to get logged-in user's details
   getLoggedInUser(): UserModel | null {
     return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
   }

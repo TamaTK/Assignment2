@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { GroupModel } from '../models/group';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -9,43 +7,61 @@ import { GroupModel } from '../models/group';
 export class GroupService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  // Existing method to create a group
-  createGroup(groupName: string, userId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/group/create-group`, {
-      name: groupName,
-      userId: userId,
-    });
+  async createGroup(groupName: string, userId: string): Promise<any> {
+    try {
+      const response = await axios.post<any>(`${this.apiUrl}/group/create-group`, {
+        name: groupName,
+        userId: userId,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error creating group:', error);
+      return null;
+    }
   }
 
-
-  getAllGroups(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/group/all-groups`);
+  async getAllGroups(): Promise<any> {
+    try {
+      const response = await axios.get<any>(`${this.apiUrl}/group/all-groups`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all groups:', error);
+      return null;
+    }
   }
 
-
-  joinGroup(groupId: string, userId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/group/join-group`, {
-      groupId,
-      userId,
-    });
+  async joinGroup(groupId: string, userId: string): Promise<any> {
+    try {
+      const response = await axios.post<any>(`${this.apiUrl}/group/join-group`, {
+        groupId,
+        userId,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error joining group:', error);
+      return null;
+    }
   }
 
-
-  createChannel(groupId: string, channelName: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/group/create-channel`, {
-      groupId,
-      channelName,
-    });
+  async getChannels(groupId: string): Promise<any> {
+    try {
+      const response = await axios.get<any>(`${this.apiUrl}/group/channels/${groupId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching group channels:', error);
+      return null;
+    }
   }
 
-
-  getChannels(groupId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/group/channels/${groupId}`);
-  }
-
-  getUserGroups(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/group/get-user-groups/${userId}`);
+  async getUserGroups(userId: string): Promise<any> {
+    try {
+      const response = await axios.get<any>(`${this.apiUrl}/group/get-user-groups/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user groups:', error);
+      return null;
+    }
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -8,16 +7,25 @@ import { Observable } from 'rxjs';
 export class ChannelService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  // Fetch channels of a group
-  getGroupChannels(groupId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/group/get-group-channels/${groupId}`);
+  async getGroupChannels(groupId: string): Promise<any> {
+    try {
+      const response = await axios.get<any>(`${this.apiUrl}/group/get-group-channels/${groupId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching group channels:', error);
+      return null;
+    }
   }
 
-  // Create a new channel within a group
-  createChannel(groupId: string, channelName: string): Observable<any> {
-    console.log('createChannel Service - Payload:', { groupId, channelName });
-    return this.http.post<any>(`${this.apiUrl}/group/create-channel`, { groupId, channelName });
+  async createChannel(groupId: string, channelName: string): Promise<any> {
+    try {
+      const response = await axios.post<any>(`${this.apiUrl}/group/create-channel`, { groupId, channelName });
+      return response.data;
+    } catch (error) {
+      console.error('Error creating channel:', error);
+      return null;
+    }
   }
 }

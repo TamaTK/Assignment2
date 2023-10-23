@@ -1,7 +1,14 @@
-import { Channel } from './channel';
+import { ChannelModel } from './channel';
 
-describe('Channel', () => {
+const dummyChannel = new ChannelModel(
+  1, // id
+  'Test Channel', // name
+  1, // groupId
+  [] // members (empty array for this example)
+);
+
+describe('ChannelModel', () => {
   it('should create an instance', () => {
-    expect(new Channel()).toBeTruthy();
+    expect(dummyChannel).toBeTruthy();
   });
 });

@@ -1,7 +1,12 @@
-import { Role } from './role';
+import { RoleModel } from './role';
 
-describe('Role', () => {
+const dummyRole = new RoleModel(
+  1, // id
+  'Test Role' // name
+);
+
+describe('RoleModel', () => {
   it('should create an instance', () => {
-    expect(new Role()).toBeTruthy();
+    expect(dummyRole).toBeTruthy();
   });
 });

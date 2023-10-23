@@ -1,21 +1,30 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed, async } from '@angular/core/testing';
 import { ChannelsComponent } from './channels.component';
+import { ChannelService } from '../services/channel.service';
+
 
 describe('ChannelsComponent', () => {
   let component: ChannelsComponent;
-  let fixture: ComponentFixture<ChannelsComponent>;
+  let channelService: ChannelService;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ChannelsComponent]
-    });
-    fixture = TestBed.createComponent(ChannelsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+      declarations: [ChannelsComponent],
+      providers: [ChannelService, /* other services */],
+      // ... other configurations ...
+    }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    component = TestBed.createComponent(ChannelsComponent).componentInstance;
+    channelService = TestBed.inject(ChannelService);
+  }));
+
+  it('should create a channel', () => {
+    const channelName = 'Test Channel';
+    component.channelName = channelName;
+    spyOn(channelService, 'createChannel').and.callThrough();
+
+    component.createChannel();
+
+    expect(channelService.createChannel).toHaveBeenCalled();
   });
 });
